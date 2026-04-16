@@ -1,0 +1,342 @@
+{
+  "name": "Echo_Trend_Social_Enrichment",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -544,
+        0
+      ],
+      "id": "836aa220-f01d-4292-b51f-568ff48ffe4e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of items) {\n  const text = item.json.post_text;\n  \n  // 1. Clean text: remove URLs, anonymize @mentions\n  let cleanText = text.replace(/http\\S+/g, '');\n  cleanText = cleanText.replace(/@\\S+/g, '@user');\n  \n  // 2. Extract hashtags (array of strings without #)\n  const hashtagMatches = text.match(/#(\\w+)/g) || [];\n  const hashtags = hashtagMatches.map(tag => tag.substring(1)); // remove '#'\n  \n  // 3. Flag ads\n  const lowerText = text.toLowerCase();\n  const isAd = lowerText.includes('#ad') || \n                lowerText.includes('#sponsored') || \n                lowerText.includes('giveaway');\n  \n  // 4. Add new fields to the item\n  item.json.clean_text = cleanText;\n  item.json.hashtags = hashtags;\n  item.json.is_ad = isAd;\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        0
+      ],
+      "id": "79636e70-3b2e-4532-b405-16c83bcb514a",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Simple sentiment lexicon for coffee social media\nconst positiveWords = ['good', 'great', 'awesome', 'love', 'best', 'perfect', 'amazing', 'happy', 'excellent', 'favorite', 'delicious', 'enjoy', 'beautiful', 'notes', 'vibe', 'craft', 'perfect', 'pour', 'slow', 'farm', 'experience', 'training', 'remember', 'favorite', 'rare', 'insane'];\nconst negativeWords = ['bad', 'terrible', 'hate', 'worst', 'disappointed', 'slow', 'wait', 'frustrating', 'burnt', 'issue', 'sorry', 'problem', 'long line', 'sticker', 'frustrated'];\n\nfor (const item of items) {\n  const text = item.json.clean_text.toLowerCase();\n  const words = text.split(/\\W+/);\n  \n  let score = 0;\n  for (const word of words) {\n    if (positiveWords.includes(word)) score += 1;\n    if (negativeWords.includes(word)) score -= 1;\n  }\n  \n  // Determine sentiment label\n  let label = 'neutral';\n  let probability = 0.5;\n  if (score > 0) {\n    label = 'pos';\n    probability = 0.6 + (score * 0.1);\n  } else if (score < 0) {\n    label = 'neg';\n    probability = 0.6 + (Math.abs(score) * 0.1);\n  }\n  \n  // Add sentiment fields matching the API format\n  item.json.sentiment_label = label;\n  item.json.sentiment_score = score;\n  item.json.sentiment_probability = Math.min(probability, 0.99);\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        0
+      ],
+      "id": "39edd88f-a101-4be9-964f-81f97e3eb617",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of items) {\n  // Get existing data\n  const hashtags = item.json.hashtags || [];\n  const cleanText = item.json.clean_text || '';\n  const lowerText = cleanText.toLowerCase();\n  \n  // Categorization logic\n  let category = 'General';\n  \n  // Check for Promotion\n  const hashtagString = hashtags.join(' ').toLowerCase();\n  if (hashtagString.includes('ad') || hashtagString.includes('sweepstakes') || hashtagString.includes('sponsored')) {\n    category = 'Promotion';\n  }\n  // Check for Service Issue\n  else if (lowerText.match(/wait|long line|slow|frustrat|sorry|issue/)) {\n    category = 'Service Issue';\n  }\n  \n  // Add category field\n  item.json.category = category;\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "2b730250-2c47-4239-abe7-9ef3fa75825c",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1_0CJaA-5EGZdbduiB2EmMNvFcNbzLj6bIQIbMnS4etc",
+          "mode": "list",
+          "cachedResultName": "social data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_0CJaA-5EGZdbduiB2EmMNvFcNbzLj6bIQIbMnS4etc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "social_data enriched",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_0CJaA-5EGZdbduiB2EmMNvFcNbzLj6bIQIbMnS4etc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "post_id",
+              "displayName": "post_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "platform",
+              "displayName": "platform",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brand_mention",
+              "displayName": "brand_mention",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "post_text",
+              "displayName": "post_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "likes",
+              "displayName": "likes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "comments",
+              "displayName": "comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "clean_text",
+              "displayName": "clean_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "hashtags",
+              "displayName": "hashtags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "is_ad",
+              "displayName": "is_ad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_label",
+              "displayName": "sentiment_label",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_score",
+              "displayName": "sentiment_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "sentiment_probability",
+              "displayName": "sentiment_probability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        480,
+        0
+      ],
+      "id": "07c054b5-f779-4d19-8b92-8e8507c3d9c4",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "IdGNkWFOjmbap1ON",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "post_id": "IG_001",
+          "platform": "Instagram",
+          "brand_mention": "UrbanBrew",
+          "post_text": "Morning boost! ☕️ Try our new Caramel Crunch Latte. #UrbanBrew #CoffeeTime",
+          "likes": 1245,
+          "comments": 34,
+          "date": "2026-01-05"
+        }
+      },
+      {
+        "json": {
+          "post_id": "IG_002",
+          "platform": "Instagram",
+          "brand_mention": "RoastLab",
+          "post_text": "Single origin Ethiopia Guji. Notes of blueberry and dark chocolate. Slow bar Saturdays. #specialtycoffee #RoastLab",
+          "likes": 876,
+          "comments": 89,
+          "date": "2026-01-05"
+        }
+      },
+      {
+        "json": {
+          "post_id": "TW_001",
+          "platform": "X",
+          "brand_mention": "UrbanBrew",
+          "post_text": "@User123 Sorry for the wait! We're brewing as fast as we can. #UrbanBrew",
+          "likes": 56,
+          "comments": 12,
+          "date": "2026-01-06"
+        }
+      },
+      {
+        "json": {
+          "post_id": "RD_001",
+          "platform": "Reddit",
+          "brand_mention": "RoastLab",
+          "post_text": "Just tried RoastLab's anaerobic natural. Honestly, the barista spent 5 mins talking about the farm. Best coffee experience this year.",
+          "likes": 234,
+          "comments": 45,
+          "date": "2026-01-07"
+        }
+      },
+      {
+        "json": {
+          "post_id": "IG_003",
+          "platform": "Instagram",
+          "brand_mention": "UrbanBrew",
+          "post_text": "Double tap if you need caffeine NOW! 💥 #ad #sponsored #EnergyDrinkAlternative",
+          "likes": 4500,
+          "comments": 15,
+          "date": "2026-01-08"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5217cc69-9495-45a4-b4f6-0ad1a9e58f3f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba5d5f252f9a02adcff128a079a3459448fd4ac7863e8bd3b643ec54f9a1d92b"
+  },
+  "id": "xeYxaRD4pxxp9oWv",
+  "tags": []
+}
