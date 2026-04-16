@@ -47,7 +47,7 @@ This project simulates a complete data pipeline:
 | `data/enriched_social_data.csv` | Final dataset after n8n enrichment |
 | `n8n/EchoTrend_Enrichment_Workflow.json` | Exported n8n workflow (importable to any n8n instance) |
 | `tableau/EchoTrend_Latte_Loyalty_Gap.twbx` | Tableau packaged workbook (optional) |
-| `images/` | Screenshots of dashboards and story points |
+
 
 ---
 
@@ -92,4 +92,14 @@ The Tableau story comprises **four key views**:
 [View Full Story](https://public.tableau.com/views/YourLink)
 
 ---
+## Acknowledgements
+- Tableau Public for the interactive visualization and stoey
+- n8n.ai for workflow automation
+- Python(Faker/ Makaroo) for data scraping
+- Github for presentation
+
+### Author
+**Timba Patricia Stephanie**
+**JUNIOR DATA SPECIALIST AND ANALYST**
+
 
