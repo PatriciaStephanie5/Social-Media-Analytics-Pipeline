@@ -89,7 +89,6 @@ The Tableau story comprises **four key views**:
 - **Projected Impact**: +0.15 sentiment lift in 90 days.
 
 **Explore the interactive story on Tableau Public:**  
-[View Full Story](https://public.tableau.com/views/YourLink)
 
 ---
 ## Acknowledgements
