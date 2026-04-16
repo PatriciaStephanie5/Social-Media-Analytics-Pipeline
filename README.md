@@ -1,6 +1,5 @@
 # EchoTrend Analytics: The Latte Loyalty Gap
 
-[![Tableau Public](https://img.shields.io/badge/Tableau-Public-blue?logo=tableau)](https://public.tableau.com/views/YourLink)
 [![n8n](https://img.shields.io/badge/Automation-n8n-red?logo=n8n)](https://n8n.io)
 
 
@@ -62,10 +61,6 @@ The n8n workflow performs the following steps **without external API dependencie
 4. **Code Node (JavaScript)** – Business categorization (Promotion / Service Issue / General).
 5. **Spreadsheet File / Google Sheets** – Export enriched CSV.
 
-> *Why no HTTP API?*  
-> To ensure reliability and teach the underlying logic, sentiment is derived from a custom coffee‑focused lexicon. This makes the workflow 100% reproducible without rate limits or external service outages.
-
-![n8n Workflow](n8n/screenshots/workflow_overview.png)
 
 ---
 
@@ -93,14 +88,8 @@ The Tableau story comprises **four key views**:
 - Pilot “Express Pickup Lane” to address operational complaints.
 - **Projected Impact**: +0.15 sentiment lift in 90 days.
 
-🔗 **Explore the interactive story on Tableau Public:**  
+**Explore the interactive story on Tableau Public:**  
 [View Full Story](https://public.tableau.com/views/YourLink)
 
 ---
 
-## 🚀 How to Reproduce This Project
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/EchoTrend-Social-Analytics.git
-cd EchoTrend-Social-Analytics
