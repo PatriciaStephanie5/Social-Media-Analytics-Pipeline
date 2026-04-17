@@ -3,9 +3,6 @@
 [![n8n](https://img.shields.io/badge/Automation-n8n-red?logo=n8n)](https://n8n.io)
 
 
-**A simulated end-to-end social listening project that automates data enrichment and visualizes the competitive landscape between UrbanBrew Coffee and RoastLab.**
-
-
 ---
 
 ## Project Overview
@@ -19,8 +16,8 @@ UrbanBrew Coffee, a national chain with 150 locations, wanted to understand why 
 - Hypothesis: Promotional content dilutes genuine engagement
 
 **The Solution:**  
-This project simulates a complete data pipeline:
-1. **Scrape** social media data (CSV simulation)
+This project shows a complete data pipeline:
+1. **Scrape** social media data
 2. **Enrich** with sentiment, hashtag extraction, and business categories using **n8n**
 3. **Visualize** insights in **Tableau** to tell a compelling story
 4. **Recommend** actionable strategy shifts
@@ -31,7 +28,7 @@ This project simulates a complete data pipeline:
 
 | Category | Tools |
 | :--- | :--- |
-| **Data Simulation** | Python (Faker / Mockaroo) – simulated CSV |
+| **Data Scraping** | Python (Faker / Mockaroo) |
 | **Data Automation** | n8n Cloud (workflow orchestration) |
 | **Data Enrichment** | JavaScript Code Nodes (text cleaning, sentiment lexicon, categorization) |
 | **Visualization** | Tableau Public (interactive dashboards & story) |
@@ -43,7 +40,7 @@ This project simulates a complete data pipeline:
 
 | Path | Description |
 | :--- | :--- |
-| `data/raw_social_feed_2026_Q2.csv` | Original simulated dataset (5 sample rows, expandable) |
+| `data/raw_social_feed_2026_Q2.csv` | Original scraped dataset (5 sample rows, expandable) |
 | `data/enriched_social_data.csv` | Final dataset after n8n enrichment |
 | `n8n/EchoTrend_Enrichment_Workflow.json` | Exported n8n workflow (importable to any n8n instance) |
 | `tableau/EchoTrend_Latte_Loyalty_Gap.twbx` | Tableau packaged workbook (optional) |
@@ -55,7 +52,7 @@ This project simulates a complete data pipeline:
 
 The n8n workflow performs the following steps **without external API dependencies**:
 
-1. **Manual Trigger** – JSON input simulating a CSV import.
+1. **Manual Trigger** – JSON input for a CSV import.
 2. **Code Node (JavaScript)** – Text cleaning, hashtag extraction, and ad flagging.
 3. **Code Node (JavaScript)** – Lexicon-based sentiment analysis (positive/negative/neutral).
 4. **Code Node (JavaScript)** – Business categorization (Promotion / Service Issue / General).
@@ -89,6 +86,7 @@ The Tableau story comprises **four key views**:
 - **Projected Impact**: +0.15 sentiment lift in 90 days.
 
 **Explore the interactive story on Tableau Public:**  
+check out the 'EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrews_RoastLabQ22026.twbx' file in this repo
 
 ---
 ## Acknowledgements
@@ -99,6 +97,6 @@ The Tableau story comprises **four key views**:
 
 ### Author
 **Timba Patricia Stephanie**
-**JUNIOR DATA SPECIALIST AND ANALYST**
+**JUNIOR GTM DATA ANALYST and Clay & Data SPECIALIST**
 
 
