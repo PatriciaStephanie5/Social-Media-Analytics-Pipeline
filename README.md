@@ -1,7 +1,7 @@
 # EchoTrend Analytics: The Latte Loyalty Gap - OutreachIQ consulting 
 
 **Freelance GTM Data Analyst and Clay & Data Specialist Project**  
-**Q1 2025 | Delivered via Freelancer.com
+**Q2 2025 | Delivered via Freelancer.com
 
 [![n8n](https://img.shields.io/badge/Automation-n8n-red?logo=n8n)](https://n8n.io)
 
@@ -96,7 +96,7 @@ check out the 'EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrews_RoastLabQ22026.tw
 
 **Client**: OutreachIQ Consulting (B2B Sales Intelligence & Data Consulting)  
 **Role**: Freelance GTM Data Analyst and Clay & Data Specialist  
-**Date**: Q3 2024
+**Date**: Q2 2025
 
 
 ---
