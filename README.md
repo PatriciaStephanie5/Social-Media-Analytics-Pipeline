@@ -90,6 +90,7 @@ The Tableau story comprises **four key views**:
 
 **Explore the interactive story on Tableau Public:**  
 check out the 'EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrews_RoastLabQ22026.twbx' file in this repo
+- Live Tableau dashboard (https://public.tableau.com/app/profile/timba.patricia.stephanie/viz/EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrewvs_RoastLabQ22026/Dashboard2)
 
 ---
 
