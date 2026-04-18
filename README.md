@@ -1,4 +1,7 @@
-# EchoTrend Analytics: The Latte Loyalty Gap
+# EchoTrend Analytics: The Latte Loyalty Gap - OutreachIQ consulting 
+
+**Freelance GTM Data Analyst and Clay & Data Specialist Project**  
+**Q1 2025 | Delivered via Freelancer.com
 
 [![n8n](https://img.shields.io/badge/Automation-n8n-red?logo=n8n)](https://n8n.io)
 
@@ -89,6 +92,13 @@ The Tableau story comprises **four key views**:
 check out the 'EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrews_RoastLabQ22026.twbx' file in this repo
 
 ---
+
+**Client**: OutreachIQ Consulting (B2B Sales Intelligence & Data Consulting)  
+**Role**: Freelance GTM Data Analyst and Clay & Data Specialist  
+**Date**: Q3 2024
+
+
+---
 ## Acknowledgements
 - Tableau Public for the interactive visualization and stoey
 - n8n.ai for workflow automation
@@ -97,6 +107,6 @@ check out the 'EchoTrendAnalyticsTheLatteLoyaltyGap-UrbanBrews_RoastLabQ22026.tw
 
 ### Author
 **Timba Patricia Stephanie**
-**JUNIOR GTM DATA ANALYST and Clay & Data SPECIALIST**
+**GTM DATA ANALYST and Clay & Data SPECIALIST**
 
 
